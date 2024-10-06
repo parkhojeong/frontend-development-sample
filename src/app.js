@@ -1,1 +1,3 @@
-console.log(math.sum(1,2));
+import {sum} from './math.js'
+
+console.log(sum(1,2));

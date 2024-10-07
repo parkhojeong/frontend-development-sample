@@ -16,6 +16,13 @@ module.exports = {
         use: [
           path.resolve('./my-webpack-loader')
         ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       }
     ]
   }

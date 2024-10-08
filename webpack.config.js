@@ -1,5 +1,6 @@
 const path = require('path');
-const MyWebpackPlugin = require('./my-webpack-plugin');
+const webpack = require('webpack');
+const childProcess = require("child_process"); // child_process 사용하면 terminal command 사용할 수 있음
 
 module.exports = {
   mode: 'development',
@@ -34,6 +35,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new MyWebpackPlugin(),
+    new webpack.BannerPlugin({
+      banner: `
+        Build Date: ${new Date().toLocaleString()}
+        Commit Version: ${childProcess.execSync('git rev-parse --short HEAD')}
+        Author: ${childProcess.execSync('git config user.name')}
+      `
+    })
   ]
 }

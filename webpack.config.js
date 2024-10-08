@@ -41,6 +41,11 @@ module.exports = {
         Commit Version: ${childProcess.execSync('git rev-parse --short HEAD')}
         Author: ${childProcess.execSync('git config user.name')}
       `
+    }),
+    new webpack.DefinePlugin({
+      TWO_NUMBER: '1+1',
+      TWO_STRING: JSON.stringify('1+1'),
+      'api.domain': JSON.stringify('http://dev.api.domain.com'),
     })
   ]
 }

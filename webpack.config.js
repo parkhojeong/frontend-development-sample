@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const childProcess = require("child_process"); // child_process 사용하면 terminal command 사용할 수 있음
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: 'development',
@@ -24,7 +25,6 @@ module.exports = {
             loader: 'url-loader',
             options: {
               name: '[name].[ext]?[hash]',
-              publicPath: './dist',
               limit: 8192,
             }
           }
@@ -46,6 +46,16 @@ module.exports = {
       TWO_NUMBER: '1+1',
       TWO_STRING: JSON.stringify('1+1'),
       'api.domain': JSON.stringify('http://dev.api.domain.com'),
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      templateParameters: {
+        env: process.env.NODE_ENV === 'development' ? '(개발용)' : ''
+      },
+      minify: process.env.NODE_ENV === 'development' ? {
+        collapseWhitespace: true,
+        removeComments: true,
+      } : false
     })
   ]
 }

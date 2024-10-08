@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const childProcess = require("child_process"); // child_process 사용하면 terminal command 사용할 수 있음
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
@@ -17,7 +18,11 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
+        use: [
+          process.env.NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader
+            : 'style-loader',
+          'css-loader']
       },
       {
         test: /\.(png|jpg)$/i,
@@ -58,6 +63,10 @@ module.exports = {
         removeComments: true,
       } : false
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    ...(process.env.NODE_ENV === 'production'
+      ? [new MiniCssExtractPlugin({filename: '[name].css'})]
+      : []
+    )
   ]
 }

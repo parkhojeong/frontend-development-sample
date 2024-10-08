@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const childProcess = require("child_process"); // child_process 사용하면 terminal command 사용할 수 있음
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -56,6 +57,7 @@ module.exports = {
         collapseWhitespace: true,
         removeComments: true,
       } : false
-    })
+    }),
+    new CleanWebpackPlugin()
   ]
 }
